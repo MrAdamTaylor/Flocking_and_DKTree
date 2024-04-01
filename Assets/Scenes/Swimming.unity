@@ -449,6 +449,8 @@ MonoBehaviour:
   _powerSpred: 4
   _indentation: 15
   _neighbourDistance: 3.89
+  _rotateSpeed: 4.83
+  _radiusRotate: 6.75
 --- !u!4 &328089176
 Transform:
   m_ObjectHideFlags: 0
@@ -515,9 +517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2323a4b04f149654994d0dd4e92d4489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debug: 1
-  _centerVectors: []
-  _avoidVectors: []
+  Debug: 0
+  CenterVectors: []
+  AvoidVectors: []
 --- !u!1 &665858388 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d0f1fd4389537f45bee5b20a502d4e6, type: 3}

@@ -3,41 +3,39 @@ using System.Collections.Generic;
 using FlockSimulation;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace FlockSimulation
 {
     public class Flock : MonoBehaviour
     {
-        public bool _debug;
+        public bool Debug;
         
         private float _speed;
 
-        public List<Vector3> _centerVectors = new List<Vector3>(); 
-        public List<Vector3> _avoidVectors = new List<Vector3>();
+        public List<Vector3> CenterVectors = new List<Vector3>(); 
+        public List<Vector3> AvoidVectors = new List<Vector3>();
         private Vector3 _center;
         private Vector3 _avoidVector;
         private FlockDrawer _drawer;
 
         void Start()
         {
-            if (_debug)
+            if (Debug)
             {
                 _drawer = gameObject.AddComponent<FlockDrawer>();
             }
 
             _speed = Random.Range(FlockManager.FM.MinSpeed, FlockManager.FM.MaxSpeed);
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
             ApplyRules();
             this.transform.Translate(0, 0, _speed * Time.deltaTime);
         }
         
-        
-
         private void ApplyRules()
         {
             GameObject[] gos;
@@ -59,13 +57,13 @@ namespace FlockSimulation
             {
                 if (go != this.gameObject)
                 {
-                    if (_debug)
+                    if (Debug)
                     {
                         _drawer.CurrentPosition = this.transform.position;
                     }
 
                     nDistance = Vector3.Distance(go.transform.position, this.transform.position);
-                    if (_debug)
+                    if (Debug)
                     {
                         _drawer.NeighboursVectors.Add(go.transform.position);
                     }
@@ -91,7 +89,7 @@ namespace FlockSimulation
             if (groupSize > 0)
             {
                 vcentre = vcentre / groupSize;
-                if (_debug)
+                if (Debug)
                 {
                     _drawer.Center = vcentre;
                     _drawer.AvoidVector = vavoid;
@@ -102,7 +100,7 @@ namespace FlockSimulation
                 _speed = gSpeed / groupSize;
 
                 Vector3 direction = (vcentre + vavoid) - transform.position;
-                if (_debug)
+                if (Debug)
                 {
                     _drawer.MiddlePosition = (vcentre + vavoid);
                     _drawer.DirectionWithoutAvoid = vcentre - transform.position;
@@ -118,20 +116,6 @@ namespace FlockSimulation
                 }
             }
         }
-
-        /*public void DrawRey(Vector3 startPos, Vector3 finishPos, Color color)
-        {
-            Debug.DrawRay(startPos, finishPos, color, 3);
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_center != null && _avoidVector != null)
-            {
-                Gizmos.DrawWireSphere(_center, 0.5f);
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(_avoidVector, 0.3f);
-            }
-        }*/
+        
     }
 }
